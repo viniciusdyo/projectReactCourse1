@@ -335,6 +335,9 @@ state = {
       counter : 0
  };
 ~~~ 
+ 
+ &nbsp;
+ &nbsp;
 
  ## Import
 
@@ -357,6 +360,9 @@ class App extends React.Component {
 ~~~
 
  Essa seria um forma mais longa de importar os componentes do react.
+ 
+ &nbsp;
+ &nbsp;
 
  ## Array
  [Array.prototype.map()](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
@@ -376,6 +382,9 @@ class App extends React.Component {
 
  Onde o elemento ***posts.map()*** simboliza o ***Array.prototype.map()*** que recebe até três atributos.
  Dentro da ***Arrow function***, existe um *h1* carregando uma *key* (chave única) para aumentar a performace do aplicativo, renderizando apenas o que foi alterado e selecionado pelo código.
+ 
+ &nbsp;
+ &nbsp;
 
  ## LifeCicle Methods
 
@@ -415,3 +424,82 @@ Esse método faz parte dos life cicle methods que definem todo o ciclo de vida d
 
 - ***Fase Commit***:
 "Pode operar o DOM, executar efeitos colaterais, agendar atualizações."
+ 
+ &nbsp;
+ &nbsp;
+
+## Data Fetch
+
+ Data Fetching é buscar dados fora da API.
+
+ Utilizamos o método ***componentDidMount()*** para preencher os *posts* através do *Data Fetch*.
+ 
+ Para fazermos as requisições, usamos a Fetch API do navegador. Descrito melhor na [documentação sobre Data Fetch em JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API).
+
+ Fetch Data, no react, funciona através de respostas das requisições feitas no navagador pela API.
+
+> ~~~
+> componentDidMount() {
+>   fetch('https://jsonplaceholder.typicode.com/posts')
+>   .then(response => response.json())
+>   .then(posts => this.setState({ posts }))
+> }
+> ~~~
+
+ A API recebe a resposta contento cada post da API consumida e transforma em um arquivo json (***response.json()***) e após isso o ***setState*** seta o estado da página com o conteúdo dos posts.
+
+### Promise.all()
+
+ Recebe dados assíncronos que podem ser rejeitados ou resolvidos. Caso sejam resolvidos, a Promise cria uma array com os dados resolvidos.
+ Na API do projeto, esse método é utilizado para consumir os dados de uma API externa e tratá-los. No caso, ela já utiliza os dados de uma array que se forem rejeitados seriam tratados pelo método da mesma forma. 
+ ***Promise*** é utilizado no JavaScript como uma promessa, podendo trazer os dados na mesma hora, em um futuro ou mesmo não apresentar dados nenhum (quando rejeitados).
+
+### Lógica Fetch
+
+> ~~~ 
+> loadPosts = async () => {
+>    
+>    const postsResponse = fetch('https://jsonplaceholder.typicode.com/posts');
+>    
+>    const photosResponse = fetch('https://jsonplaceholder.typicode.com/photos');
+>
+>    const [posts, photos] = await Promise.all([postsResponse, photosResponse]);
+>   
+>    const postsJson = await posts.json();
+>    const photosJson = await photos.json();
+>
+>    const postsAndPhotos = postsJson.map((post, index) => {
+>      return { ...post, cover: photosJson[index].url }
+>    });
+>    
+>    this.setState({ posts: postsAndPhotos });
+>  }
+> ~~~
+
+ Para utilizar tanto os posts e photos em array, utilizamos o Ziper, uma forma de juntar dois arrays e indexar seus dados. No caso, para cada post tem uma foto do photos, ou seja, está relacionando os indices de cada banco.( o post de id: 1 carrega a imagem da post no Json photos com o mesmo id: 1)
+
+> ~~~    
+>    const postsAndPhotos = postsJson.map((post, index) => {
+>      return { ...post, cover: photosJson[index].url }
+>    });
+>    
+>    this.setState({ posts: postsAndPhotos });
+> ~~~
+ 
+[API gratuita para consumir](https://jsonplaceholder.typicode.com/)
+
+[Documentação sobre Data Fetch em JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API)
+
+
+&nbsp;
+
+&nbsp;
+
+---
+
+&nbsp;
+
+&nbsp;
+
+## Componentização
+
