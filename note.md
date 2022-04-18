@@ -503,3 +503,83 @@ Esse método faz parte dos life cicle methods que definem todo o ciclo de vida d
 
 ## Componentização
 
+Sempre que um componente for executar JSX, seguindo o padrão certos padrões de organização, a extensão da index.js precisa ser alterada pada index.jsx de acordo com o conteúdo que o componente carrega. Porém, não há diferença entre as extensões, é apenas uma convensão.
+
+Os componentes podem ou não ter estados, podendo utilizar ReactHooks com componentes funcionais para adicionar estado em componentes de funções.
+
+Relembrando, um componente é um elemento que tem uma classe que tem o método render e retorna JSX ou uma função que também retorna JSX.
+
+
+###### Ex. da API.
+> components/PostCard/Index.jsx 
+
+### Props 
+
+***Props*** são propriedades de um objeto. 
+
+Os componentes podem ter corpo ou não, assim como elementos jsx como as <div> root. A sintaxe para definir os componentes que tem corpo é, por exemplo:
+
+> ~~~ 
+> <PostCard></PostCard> 
+> ~~~
+
+E os componentes que não possuem corpo são definidos da forma abaixo:
+
+> ~~~ 
+> <PostCard /> 
+> ~~~
+
+
+O componente pode não ter corpo/filhos, mas contém atributos.
+
+
+> ~~~
+> {posts.map(post => (
+>   <PostCard atributo='atributo' />
+> ))}
+> ~~~
+
+Assim que se define o atributo e seu valor, ele retorna como objeto para as propriedades (*props*) do componente:
+
+> ~~~
+> 
+> export const PostCard = (props) => {
+>    console.log(props);
+>    
+>    return (
+>        <h1>Oi</h1>
+>       )
+> }
+> ~~~
+
+Essas props podem receber JSX através dos atributos.
+
+P. ex:
+
+> ~~~ 
+>  <section className="container">
+>        <div className="posts">
+>          {posts.map(post => (
+>            <PostCard post={post} key={post.id}  />
+>
+>          ))}
+>        </div>
+>      </section>
+> ~~~
+
+
+> ~~~
+> export const PostCard = ({post}) => {
+>    return (
+>       <div className="post">
+>            <img src={post.cover} alt={post.title} />
+>            
+>            <div className="post-content">
+>                <h1>{post.title}</h1>
+>                <p>{post.body}</p>
+>            </div>
+>        </div>
+>    )
+> }
+> ~~~
+
